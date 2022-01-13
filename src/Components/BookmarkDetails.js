@@ -1,12 +1,25 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import axios from 'axios'
+
+const API = process.env.REACT_APP_API_URL
 
 function BookmarkDetails() {
-  const [bookmark] = useState([]);
+  const [bookmark, setBookmark] = useState([]);
   let { index } = useParams();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    axios.get(API + `/bookmarks/${index}`)
+    .then(bookmark => {
+      setBookmark(bookmark.data)
+    })
+    .catch(err => {
+      throw err
+    })
+  }, [index]);
+
   const handleDelete = () => {};
+
   return (
     <article>
       <h3>
